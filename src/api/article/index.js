@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { middleware as query } from 'querymen';
 import { middleware as body } from 'bodymen';
-import { master, token } from '../../services/passport';
+import { token } from '../../services/passport';
 import { create, index, show, update, destroy } from './controller';
 import { schema } from './model';
 export Article, { schema } from './model';
 
 const router = new Router();
-const { title, content } = schema.tree;
+const { title, content, authorID, categoryID, slug, excerpt } = schema.tree;
 
 /**
  * @api {post} /articles Create article
@@ -22,7 +22,12 @@ const { title, content } = schema.tree;
  * @apiError 404 Article not found.
  * @apiError 401 master access only.
  */
-router.post('/', master(), body({ title, content }), create);
+router.post(
+  '/',
+  token({ required: true }),
+  body({ title, content, authorID, categoryID, slug, excerpt }),
+  create
+);
 
 /**
  * @api {get} /articles Retrieve articles
@@ -36,7 +41,7 @@ router.post('/', master(), body({ title, content }), create);
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 401 user access only.
  */
-router.get('/', token({ required: true }), query(), index);
+router.get('/', query(), index);
 
 /**
  * @api {get} /articles/:id Retrieve article
@@ -64,7 +69,12 @@ router.get('/:id', token({ required: true }), show);
  * @apiError 404 Article not found.
  * @apiError 401 master access only.
  */
-router.put('/:id', master(), body({ title, content }), update);
+router.put(
+  '/:id',
+  token({ required: true }),
+  body({ title, content, authorID, categoryID, slug, excerpt }),
+  update
+);
 
 /**
  * @api {delete} /articles/:id Delete article
@@ -76,6 +86,6 @@ router.put('/:id', master(), body({ title, content }), update);
  * @apiError 404 Article not found.
  * @apiError 401 master access only.
  */
-router.delete('/:id', master(), destroy);
+router.delete('/:id', token({ required: true }), destroy);
 
 export default router;

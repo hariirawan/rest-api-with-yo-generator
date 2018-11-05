@@ -1,10 +1,12 @@
-import { Router } from 'express'
-import user from './user'
-import auth from './auth'
-import passwordReset from './password-reset'
-import article from './article'
+import { Router } from 'express';
+import user from './user';
+import auth from './auth';
+import passwordReset from './password-reset';
+import article from './article';
+import author from './author'
+import category from './category'
 
-const router = new Router()
+const router = new Router();
 
 /**
  * @apiDefine master Master access only
@@ -29,9 +31,11 @@ const router = new Router()
  * @apiParam {String[]} [sort=-createdAt] Order of returned items.
  * @apiParam {String[]} [fields] Fields to be returned.
  */
-router.use('/users', user)
-router.use('/auth', auth)
-router.use('/password-resets', passwordReset)
-router.use('/articles', article)
+router.use('/users', user);
+router.use('/auth', auth);
+router.use('/password-resets', passwordReset);
+router.use('/articles', article);
+router.use('/authors', author)
+router.use('/categories', category)
 
-export default router
+export default router;

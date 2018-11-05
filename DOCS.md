@@ -14,6 +14,20 @@
 	- [Authenticate with Facebook](#authenticate-with-facebook)
 	- [Authenticate with Google](#authenticate-with-google)
 	
+- [Author](#author)
+	- [Create author](#create-author)
+	- [Delete author](#delete-author)
+	- [Retrieve author](#retrieve-author)
+	- [Retrieve authors](#retrieve-authors)
+	- [Update author](#update-author)
+	
+- [Category](#category)
+	- [Create category](#create-category)
+	- [Delete category](#delete-category)
+	- [Retrieve categories](#retrieve-categories)
+	- [Retrieve category](#retrieve-category)
+	- [Update category](#update-category)
+	
 - [PasswordReset](#passwordreset)
 	- [Send email](#send-email)
 	- [Submit password](#submit-password)
@@ -151,6 +165,160 @@
 | Name    | Type      | Description                          |
 |---------|-----------|--------------------------------------|
 | access_token			| String			|  <p>Google user accessToken.</p>							|
+
+# Author
+
+## Create author
+
+
+
+	POST /authors
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+| userID			| 			|  <p>Author's userID.</p>							|
+| address			| 			|  <p>Author's address.</p>							|
+| picture			| 			|  <p>Author's picture.</p>							|
+
+## Delete author
+
+
+
+	DELETE /authors/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+
+## Retrieve author
+
+
+
+	GET /authors/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+
+## Retrieve authors
+
+
+
+	GET /authors
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Update author
+
+
+
+	PUT /authors/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+| userID			| 			|  <p>Author's userID.</p>							|
+| address			| 			|  <p>Author's address.</p>							|
+| picture			| 			|  <p>Author's picture.</p>							|
+
+# Category
+
+## Create category
+
+
+
+	POST /categories
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+| name			| 			|  <p>Category's name.</p>							|
+| desc			| 			|  <p>Category's desc.</p>							|
+
+## Delete category
+
+
+
+	DELETE /categories/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+
+## Retrieve categories
+
+
+
+	GET /categories
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+| q			| String			| **optional** <p>Query to search.</p>							|
+| page			| Number			| **optional** <p>Page number.</p>							|
+| limit			| Number			| **optional** <p>Amount of returned items.</p>							|
+| sort			| String[]			| **optional** <p>Order of returned items.</p>							|
+| fields			| String[]			| **optional** <p>Fields to be returned.</p>							|
+
+## Retrieve category
+
+
+
+	GET /categories/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+
+## Update category
+
+
+
+	PUT /categories/:id
+
+
+### Parameters
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| access_token			| String			|  <p>master access token.</p>							|
+| name			| 			|  <p>Category's name.</p>							|
+| desc			| 			|  <p>Category's desc.</p>							|
 
 # PasswordReset
 

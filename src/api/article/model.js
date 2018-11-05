@@ -1,39 +1,66 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose';
 
-const articleSchema = new Schema({
-  title: {
-    type: String
+const articleSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    },
+    authorID: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    categoryID: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
+    slug: {
+      type: String
+    },
+    excerpt: {
+      type: String
+    }
   },
-  content: {
-    type: String
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (obj, ret) => {
+        delete ret._id;
+      }
+    }
   }
-}, {
-  timestamps: true,
-  toJSON: {
-    virtuals: true,
-    transform: (obj, ret) => { delete ret._id }
-  }
-})
+);
 
 articleSchema.methods = {
-  view (full) {
+  view(full) {
     const view = {
       // simple view
       id: this.id,
       title: this.title,
       content: this.content,
+      authorID: this.authorID,
+      categoryID: this.categoryID,
+      slug: this.slug,
+      excerpt: this.excerpt,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
-    }
+    };
 
-    return full ? {
-      ...view
-      // add properties for a full view
-    } : view
+    return full
+      ? {
+          ...view
+          // add properties for a full view
+        }
+      : view;
   }
-}
+};
 
-const model = mongoose.model('Article', articleSchema)
+const model = mongoose.model('Article', articleSchema);
 
-export const schema = model.schema
-export default model
+export const schema = model.schema;
+export default model;
