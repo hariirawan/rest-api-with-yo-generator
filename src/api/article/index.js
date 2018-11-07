@@ -4,6 +4,7 @@ import { middleware as body } from 'bodymen';
 import { token } from '../../services/passport';
 import { create, index, show, update, destroy } from './controller';
 import { schema } from './model';
+import { upload } from '../../services/upload';
 export Article, { schema } from './model';
 
 const router = new Router();
@@ -25,6 +26,7 @@ const { title, content, authorID, categoryID, slug, excerpt } = schema.tree;
 router.post(
   '/',
   token({ required: true }),
+  upload.single('picture'),
   body({ title, content, authorID, categoryID, slug, excerpt }),
   create
 );

@@ -1,11 +1,12 @@
 import { success, notFound } from '../../services/response/';
 import { Article } from '.';
 import { code } from '../../services/code';
+export const create = ({ bodymen: { body }, file }, res, next) => {
+  body.picture = file.path;
 
-export const create = ({ bodymen: { body } }, res, next) => {
   Article.create(body)
     .then(article => {
-      const { id, title, authorID, categoryID, slug } = article;
+      const { id, title, authorID, categoryID, slug, picture } = article;
       let response = {
         code: code.Created,
         status: 'SUCCESS',
@@ -16,6 +17,7 @@ export const create = ({ bodymen: { body } }, res, next) => {
           authorID,
           categoryID,
           slug,
+          picture,
           request: {
             type: 'GET',
             url: `http://127.0.0.1/v1/articles/${id}`
@@ -37,13 +39,14 @@ export const index = ({ querymen: { query, select, cursor } }, res, next) =>
         version: 'v1.0',
         count,
         rows: articles.map(article => {
-          const { id, title, authorID, categoryID, slug } = article;
+          const { id, title, authorID, categoryID, slug, picture } = article;
           let response = {
             id,
             title,
             authorID,
             categoryID,
             slug,
+            picture,
             request: {
               type: 'GET',
               url: `http://127.0.0.1/v1/articles/${id}`
@@ -63,13 +66,14 @@ export const show = ({ params }, res, next) =>
     .then(success(res))
     .catch(next);
 
-export const update = ({ bodymen: { body }, params }, res, next) =>
+export const update = ({ bodymen: { body }, params }, res, next) => {
   Article.findById(params.id)
     .then(notFound(res))
     .then(article => (article ? Object.assign(article, body).save() : null))
     .then(article => (article ? article.view(true) : null))
     .then(success(res))
     .catch(next);
+};
 
 export const destroy = ({ params }, res, next) =>
   Article.findById(params.id)

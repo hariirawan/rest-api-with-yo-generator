@@ -21,6 +21,9 @@ const articleSchema = new Schema(
     slug: {
       type: String
     },
+    picture: {
+      type: String
+    },
     excerpt: {
       type: String
     }
@@ -45,6 +48,7 @@ articleSchema.methods = {
       content: this.content,
       authorID: this.authorID,
       categoryID: this.categoryID,
+      picture: this.picture,
       slug: this.slug,
       excerpt: this.excerpt,
       createdAt: this.createdAt,
