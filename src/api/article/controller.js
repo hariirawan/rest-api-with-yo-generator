@@ -33,28 +33,32 @@ export const create = ({ bodymen: { body }, file }, res, next) => {
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   Article.count(query)
     .then(count =>
-      Article.find(query, select, cursor).then(articles => ({
-        code: code.Ok,
-        status: 'SUCCESS',
-        version: 'v1.0',
-        count,
-        rows: articles.map(article => {
-          const { id, title, authorID, categoryID, slug, picture } = article;
-          let response = {
-            id,
-            title,
-            authorID,
-            categoryID,
-            slug,
-            picture,
-            request: {
-              type: 'GET',
-              url: `http://127.0.0.1/v1/articles/${id}`
-            }
-          };
-          return response;
-        })
-      }))
+      Article.find(query, select, cursor)
+        .populate('categoryID', 'name')
+        .then(articles => ({
+          code: code.Ok,
+          status: 'SUCCESS',
+          version: 'v1.0',
+          count,
+          rows: articles.map(article => {
+            const { id, title, authorID, categoryID, slug, picture } = article;
+
+            let response = {
+              id,
+              title,
+              authorID,
+              category: categoryID,
+              slug,
+              picture,
+              request: {
+                type: 'GET',
+                url: `http://127.0.0.1/v1/articles/${id}`
+              }
+            };
+
+            return response;
+          })
+        }))
     )
     .then(success(res))
     .catch(next);
@@ -66,7 +70,10 @@ export const show = ({ params }, res, next) =>
     .then(success(res))
     .catch(next);
 
-export const update = ({ bodymen: { body }, params }, res, next) => {
+export const update = ({ bodymen: { body }, file, params }, res, next) => {
+  if (file) {
+    body.picture = file.path;
+  }
   Article.findById(params.id)
     .then(notFound(res))
     .then(article => (article ? Object.assign(article, body).save() : null))

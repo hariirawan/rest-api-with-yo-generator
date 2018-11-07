@@ -16,7 +16,8 @@ const articleSchema = new Schema(
     },
     categoryID: {
       type: Schema.Types.ObjectId,
-      required: true
+      required: true,
+      ref: 'Category'
     },
     slug: {
       type: String

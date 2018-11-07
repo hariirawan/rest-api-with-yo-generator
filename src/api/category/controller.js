@@ -13,7 +13,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
       };
       return response;
     })
-    .then(success(res, 201))
+    .then(success(res))
     .catch(next);
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>

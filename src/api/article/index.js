@@ -74,6 +74,7 @@ router.get('/:id', token({ required: true }), show);
 router.put(
   '/:id',
   token({ required: true }),
+  upload.single('picture'),
   body({ title, content, authorID, categoryID, slug, excerpt }),
   update
 );
